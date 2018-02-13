@@ -14,10 +14,12 @@ public class DynamicIK : MonoBehaviour {
 
     // Reference to the animator, on wwhich we will set the value of the parameters and the IK info.
     private Animator anim;
+
+    float angle = 2f;
     // Use this for initialization
     void Start () {
         this.anim = GetComponent<Animator>();
-
+        InvokeRepeating("RotateRightObj",0f,2f);
     }
 
     // Update is called once per frame
@@ -25,20 +27,26 @@ public class DynamicIK : MonoBehaviour {
 		
 	}
 
+    void RotateRightObj()
+    {
+        Debug.Log("Calling the func for rotation");
+        ik_target_ri.transform.Rotate(new Vector3(angle + 3f, angle+3f, angle + 3f));
+    }
     void OnAnimatorIK(int layerIndex)
     {
 
-            Debug.Log ("ik on layer " + layerIndex);
-       
-            Vector3 ik_target_posle = this.ik_target_Le.transform.position;
-            Vector3 ik_target_posri = this.ik_target_ri.transform.position;
+        Debug.Log ("ik on layer " + layerIndex);
+        Vector3 ik_target_posle = this.ik_target_Le.transform.position;
+        Vector3 ik_target_posri = this.ik_target_ri.transform.position;
 
+        
         anim.SetIKPosition(AvatarIKGoal.LeftHand, ik_target_posle);
-
         anim.SetIKPosition(AvatarIKGoal.RightHand, ik_target_posri);
+        anim.SetIKRotationWeight(AvatarIKGoal.RightHand, 1.0F);
 
-
+        anim.SetIKRotation(AvatarIKGoal.RightHand, Quaternion.LookRotation(ik_target_ri.transform.forward));
         float delta_ik_influence = this.ikInfluenceSpeed * Time.deltaTime;
+        //anim.set
 
         if (Input.GetKey(KeyCode.LeftShift))
             {
@@ -54,11 +62,9 @@ public class DynamicIK : MonoBehaviour {
                 if (this.ikInfluence < 0.0f) this.ikInfluence = 0.0f;
             }
 
-            anim.SetIKPositionWeight(AvatarIKGoal.LeftHand, this.ikInfluence);
+        anim.SetIKPositionWeight(AvatarIKGoal.LeftHand, this.ikInfluence);
         anim.SetIKPositionWeight(AvatarIKGoal.RightHand, this.ikInfluence);
-        // Example forcing the ikInfluence Touch as
-        // anim.SetIKPositionWeight(AvatarIKGoal.LeftHand, 0.5f);
-
+       
 
     }
 }
