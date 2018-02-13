@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657773, g: 0.49641502, b: 0.57481813, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657725, g: 0.4964143, b: 0.5748176, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -1037,7 +1037,7 @@ Transform:
   m_PrefabParentObject: {fileID: 400182, guid: e5ae0d0cd452f6b4fbbd7f5636041070, type: 3}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 476956220}
-  m_LocalRotation: {x: -0.0124138445, y: 0.6868945, z: -0.035199665, w: 0.7257981}
+  m_LocalRotation: {x: -0.012413843, y: 0.6868945, z: -0.035199665, w: 0.7257981}
   m_LocalPosition: {x: -0.06820899, y: 0.0065970956, z: -0.089392945}
   m_LocalScale: {x: 0.99999994, y: 0.9999999, z: 1.0000001}
   m_Children:
@@ -1298,6 +1298,7 @@ GameObject:
   m_Component:
   - component: {fileID: 636785289}
   - component: {fileID: 636785290}
+  - component: {fileID: 636785291}
   m_Layer: 0
   m_Name: m_ca01_MeshPart1
   m_TagString: Untagged
@@ -1478,6 +1479,20 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.3498242, y: 0.19928312, z: -0.71744365}
     m_Extent: {x: 0.67059934, y: 0.397658, z: 0.70943624}
   m_DirtyAABB: 0
+--- !u!114 &636785291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 636785288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21610015f6f16534fb3a2f1e22c62f49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  diffuseMap: {fileID: 2800000, guid: e02b661faf784e1438ec40d04d7954c9, type: 3}
+  normalMap: {fileID: 2800000, guid: 3dcd3d0ef8d9c514ca048deab1ed4c56, type: 3}
+  eyeLashesDiffuse: {fileID: 2800000, guid: c93636d64b878c94a8331e03988fbe00, type: 3}
 --- !u!1 &637975704
 GameObject:
   m_ObjectHideFlags: 0
@@ -1882,6 +1897,7 @@ GameObject:
   m_Component:
   - component: {fileID: 814130604}
   - component: {fileID: 814130605}
+  - component: {fileID: 814130606}
   m_Layer: 0
   m_Name: m_ca01_MeshPart0
   m_TagString: Untagged
@@ -2062,6 +2078,20 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.34538716, y: -0.010812074, z: -0.7179543}
     m_Extent: {x: 0.67503506, y: 0.58618677, z: 0.7099457}
   m_DirtyAABB: 0
+--- !u!114 &814130606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 814130603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21610015f6f16534fb3a2f1e22c62f49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  diffuseMap: {fileID: 2800000, guid: e02b661faf784e1438ec40d04d7954c9, type: 3}
+  normalMap: {fileID: 0}
+  eyeLashesDiffuse: {fileID: 0}
 --- !u!1 &829525683
 GameObject:
   m_ObjectHideFlags: 0
@@ -3466,6 +3496,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1527448595}
   - component: {fileID: 1527448596}
+  - component: {fileID: 1527448597}
   m_Layer: 0
   m_Name: m_ca01_MeshPart2
   m_TagString: Untagged
@@ -3643,6 +3674,20 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.074897766, y: 0.00071005523, z: -0.91829157}
     m_Extent: {x: 0.2486493, y: 0.39532918, z: 0.5096084}
   m_DirtyAABB: 0
+--- !u!114 &1527448597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1527448594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21610015f6f16534fb3a2f1e22c62f49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  diffuseMap: {fileID: 2800000, guid: e02b661faf784e1438ec40d04d7954c9, type: 3}
+  normalMap: {fileID: 2800000, guid: 3dcd3d0ef8d9c514ca048deab1ed4c56, type: 3}
+  eyeLashesDiffuse: {fileID: 2800000, guid: c93636d64b878c94a8331e03988fbe00, type: 3}
 --- !u!1 &1571424142
 GameObject:
   m_ObjectHideFlags: 0
