@@ -42,26 +42,14 @@ public class DynamicIK : MonoBehaviour {
         
         anim.SetIKPosition(AvatarIKGoal.LeftHand, ik_target_posle);
         anim.SetIKPosition(AvatarIKGoal.RightHand, ik_target_posri);
-        //anim.SetIKRotationWeight(AvatarIKGoal.RightHand, 1.0F);
+        anim.SetIKRotationWeight(AvatarIKGoal.RightHand, 1.0F);
 
-        //anim.SetIKRotation(AvatarIKGoal.RightHand, Quaternion.LookRotation(ik_target_ri.transform.forward));
+        anim.SetIKRotation(AvatarIKGoal.RightHand, Quaternion.LookRotation(ik_target_ri.transform.forward));
         float delta_ik_influence = this.ikInfluenceSpeed * Time.deltaTime;
-        //anim.set
 
-       // if (Input.GetKey(KeyCode.LeftShift))
-            {
-            Debug.Log("Pressed Shift Key ");
-
-            this.ikInfluence += delta_ik_influence;
-            if (this.ikInfluence > 1.0f) this.ikInfluence = 1.0f;
-
-            }
-         /*   else
-            {
-                this.ikInfluence -= delta_ik_influence;
-                if (this.ikInfluence < 0.0f) this.ikInfluence = 0.0f;
-            }
-            */
+        this.ikInfluence += delta_ik_influence;
+        if (this.ikInfluence > 1.0f) this.ikInfluence = 1.0f;
+        
         anim.SetIKPositionWeight(AvatarIKGoal.LeftHand, this.ikInfluence);
         anim.SetIKPositionWeight(AvatarIKGoal.RightHand, this.ikInfluence);
        
