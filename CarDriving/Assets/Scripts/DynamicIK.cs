@@ -12,24 +12,32 @@ public class DynamicIK : MonoBehaviour {
     public GameObject[] ik_target_ri;
     public float ikInfluence;
 
+    public GameObject[] lookTargets;
 
     public int ri_targ_ind,le_targ_ind;
     private float ikInfluenceSpeed = 0.5f;
 
     public Quaternion rotationOfHand;
+    public bool isLookingTowards;
+    public int lookIndex;
 
     // Reference to the animator, on which we will set the value of the parameters and the IK info.
     private Animator anim;
     float angle = 2f;
-    
+
+    public float m_LookWeight, m_BodyWeight, m_HeadWeight, m_EyesWeight, m_ClampWeight;   
+
+
     // Use this for initialization
     void Start () {
+        lookIndex = 3;
         rotationOfHand = new Quaternion();
         ri_targ_ind = 0;
         le_targ_ind = 0;
         this.anim = GetComponent<Animator>();
         InvokeRepeating("RotateRightObj",0f,2f);
     }
+
 
     // Update is called once per frame
     void Update () {
@@ -50,14 +58,16 @@ public class DynamicIK : MonoBehaviour {
 
 
         anim.SetIKRotationWeight(AvatarIKGoal.RightHand, 1.0F);
-        Debug.Log("Local Rotation " + ik_target_ri[ri_targ_ind].transform.rotation);
+       // Debug.Log("Local Rotation " + ik_target_ri[ri_targ_ind].transform.rotation);
         anim.SetIKRotation(AvatarIKGoal.RightHand, ik_target_ri[ri_targ_ind].transform.rotation);
 
 
         anim.SetIKRotationWeight(AvatarIKGoal.LeftHand, 1.0F);
-        Debug.Log("Local Rotation " + ik_target_Le[0].transform.rotation);
-        anim.SetIKRotation(AvatarIKGoal.LeftHand, ik_target_Le[0].transform.rotation);
+     //   Debug.Log("Local Rotation " + ik_target_Le[le_targ_ind].transform.rotation);
+        anim.SetIKRotation(AvatarIKGoal.LeftHand, ik_target_Le[le_targ_ind].transform.rotation);
 
+
+     
         float delta_ik_influence = this.ikInfluenceSpeed * Time.deltaTime;
 
         this.ikInfluence += delta_ik_influence;
@@ -65,7 +75,30 @@ public class DynamicIK : MonoBehaviour {
         
         anim.SetIKPositionWeight(AvatarIKGoal.LeftHand, this.ikInfluence);
         anim.SetIKPositionWeight(AvatarIKGoal.RightHand, this.ikInfluence);
-       
 
+        if (isLookingTowards)
+        {
+            LookPoint(0.5f, lookTargets[lookIndex]);
+
+        }
+        else {
+            //m_LookWeight = 0f;
+            LookPoint(0f, lookTargets[0]);
+        }
+    }
+
+    public void LookPoint(float targetLookWeight,GameObject lookTarget)
+    {
+        Debug.Log("Look Target " + lookTarget);
+        if (isLookingTowards && targetLookWeight > m_LookWeight)
+            m_LookWeight += Time.deltaTime;
+
+        if (!isLookingTowards && m_LookWeight > targetLookWeight)
+        {
+            m_LookWeight -= Time.deltaTime;
+
+        }
+        anim.SetLookAtWeight(m_LookWeight, m_BodyWeight, m_HeadWeight, m_EyesWeight, m_ClampWeight);
+        anim.SetLookAtPosition(lookTarget.transform.position);
     }
 }

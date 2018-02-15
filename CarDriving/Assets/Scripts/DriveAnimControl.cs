@@ -18,9 +18,14 @@ public class DriveAnimControl : MonoBehaviour {
 
     public DynamicIK dynIk_ref;
 
+    public static bool isShoutOnLeft,isShouting,isBackFromShout;
+    public GameObject lookMirrorLeft, lookMirrorRight, lookShout, lookCenter;
+
+    float mir_look_timer;
+    bool is_mirror_look;
     // Use this for initialization
     void Start() {
-        gearShiftSpeed = 100f;
+        gearShiftSpeed = 60f;
         refSteerRotation = steeringWheel.transform.localRotation;
         angle = refSteerRotation.z;
     }
@@ -28,36 +33,90 @@ public class DriveAnimControl : MonoBehaviour {
     // Update is called once per frame
     void Update() {
 
-        if (isGearUp || Input.GetKey(KeyCode.RightControl))
+        if (!doUp && !doDown)
         {
-            doUp = true;
-            doDown = false;
-            
+            if (Input.GetKey(KeyCode.RightShift))
+            {
+                isShoutOnLeft = true;
+
+            }
+
+            if (isShoutOnLeft)
+            {
+                if (!isShouting)
+                    ShoutOnLeftSide();
+            }
+
+            if (isBackFromShout)
+            {
+                isShoutOnLeft = false;
+                dynIk_ref.le_targ_ind = 0;
+                isBackFromShout = false;
+                dynIk_ref.isLookingTowards = false;
+
+            }
         }
-        else if (isGearDown || Input.GetKey(KeyCode.RightAlt))
+
+        if (!isShouting)
         {
-            doDown = true;
-            doUp = false;
+            if (Input.GetKey(KeyCode.RightControl))
+            {
+                doUp = true;
+                doDown = false;
+
+            }
+            else if (Input.GetKey(KeyCode.RightAlt))
+            {
+                doDown = true;
+                doUp = false;
+            }
+
+            if (doUp)
+            {
+                ShiftGearUp();
+                dynIk_ref.ri_targ_ind = 1;
+
+            }
+            else
+            {
+                dynIk_ref.ri_targ_ind = 0;
+            }
+
+            if (doDown)
+            {
+                ShiftGearDown();
+                dynIk_ref.ri_targ_ind = 0;
+                dynIk_ref.ri_targ_ind = 1;
+
+            }
+
+            if (Input.GetKey(KeyCode.A))
+            {
+                dynIk_ref.isLookingTowards = true;
+                dynIk_ref.lookIndex = 1;
+                is_mirror_look = true;
+            }
+            if (Input.GetKey(KeyCode.D))
+            {
+                dynIk_ref.isLookingTowards = true;
+                dynIk_ref.lookIndex = 2;
+                is_mirror_look = true;
+            }
+
         }
 
-        if (doUp)
+        if (is_mirror_look)
         {
-            ShiftGearUp();
-            dynIk_ref.ri_targ_ind = 1;
+            mir_look_timer += Time.deltaTime;
+            if (mir_look_timer > 1.5f)
+            {
+                dynIk_ref.isLookingTowards = false;
+               // dynIk_ref.lookIndex = 0;
+                is_mirror_look = false;
+                mir_look_timer = 0f;
 
+            }
         }
-        else {
-            dynIk_ref.ri_targ_ind = 0;
-        }
-
-        if (doDown)
-        {
-            ShiftGearDown();
-            dynIk_ref.ri_targ_ind = 0;
-            dynIk_ref.ri_targ_ind = 1;
-
-        }
-
 
         if (Input.GetKey(KeyCode.RightArrow))
         {
@@ -70,19 +129,22 @@ public class DriveAnimControl : MonoBehaviour {
     }
 
 
-    void SteerRight()
+    public void SteerRight()
     {
-        Debug.Log("Steering Right");
-        steeringWheel.transform.Rotate(0f, 0f, 1f);
+       // Debug.Log("Steering Right"+ steeringWheel.transform.rotation.z);
+        
+        if(steeringWheel.transform.rotation.z <0.1)
+            steeringWheel.transform.Rotate(0f, 0f, 1f);
     }
 
-    void SteerLeft()
+    public void SteerLeft()
     {
-        Debug.Log("Steering Left");
-        steeringWheel.transform.Rotate(0f, 0f, -1f);
+        Debug.Log("Steering Left"+ steeringWheel.transform.rotation.z);
+        if (steeringWheel.transform.rotation.z > -0.34f)
+            steeringWheel.transform.Rotate(0f, 0f, -1f);
     }
 
-    void ShiftGearUp()
+    public void ShiftGearUp()
     {
 
         //Gear Up shifting Till it reaches the desire rotation level 
@@ -96,7 +158,7 @@ public class DriveAnimControl : MonoBehaviour {
             doUp = false;
     }
 
-    void ShiftGearDown()
+    public void ShiftGearDown()
     {
         //Doing the Rotation backwards for gear lever. 
         //If lever reaches to desired rotation make boolean doDown false so 
@@ -105,6 +167,18 @@ public class DriveAnimControl : MonoBehaviour {
             gearRoot.transform.Rotate(0f, 0f, 1f * gearShiftSpeed * Time.deltaTime);
         else
             doDown = false;
+    }
+
+    public void ShoutOnLeftSide()
+    {
+        if (!isShouting)
+        {
+            dynIk_ref.le_targ_ind = 1;
+            isShouting = true;
+            //dynIk_ref.LookPoint(0.5f,lookShout);
+            dynIk_ref.isLookingTowards = true;
+            dynIk_ref.lookIndex = 3;
+        }
     }
 
 }
