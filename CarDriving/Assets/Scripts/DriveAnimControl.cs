@@ -59,13 +59,13 @@ public class DriveAnimControl : MonoBehaviour {
 
         if (!isShouting)
         {
-            if (Input.GetKey(KeyCode.RightControl))
+            if (Input.GetKey(KeyCode.UpArrow))
             {
                 doUp = true;
                 doDown = false;
 
             }
-            else if (Input.GetKey(KeyCode.RightAlt))
+            else if (Input.GetKey(KeyCode.DownArrow))
             {
                 doDown = true;
                 doUp = false;
